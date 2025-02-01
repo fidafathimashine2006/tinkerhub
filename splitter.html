@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Splitter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1><span class="brand-name">Split</span><span class="smart-name">Smart</span></h1>
+        <h3>Expense Splitter</h3>
+
+        <div class="splitter-box">
+            <input type="number" id="numPeople" placeholder="Enter number of people" min="1">
+            <button onclick="generateInputs()">Next</button>
+            
+            <div id="inputs"></div>
+            <button id="itemBtn" onclick="generateItemInputs()" style="display:none;">Enter Items</button>
+            <div id="items"></div>
+            <button id="calculateBtn" onclick="calculateSplit()" style="display:none;">Calculate</button>
+            <div id="result"></div>
+        </div>
+    </div>
+    
+    <div class="sidebar">
+        <h3>Splitting History</h3>
+        <div id="history"></div>
+    </div>
+    
+    <script>
+        let items = [];
+        let people = [];
+
+        function generateInputs() {
+            let numPeople = document.getElementById("numPeople").value;
+            if (numPeople < 1) {
+                alert("Please enter a valid number of people.");
+                return;
+            }
+
+            let inputDiv = document.getElementById("inputs");
+            inputDiv.innerHTML = '';
+            for (let i = 0; i < numPeople; i++) {
+                inputDiv.innerHTML += `
+                    <input type="text" id="name${i}" placeholder="Name">
+                    <input type="number" id="expense${i}" placeholder="Initial Expense" min="0"><br>
+                `;
+            }
+            document.getElementById("itemBtn").style.display = "block";
+        }
+
+        function generateItemInputs() {
+            let numItems = prompt("How many items are there?");
+            if (numItems < 1) {
+                alert("Please enter a valid number of items.");
+                return;
+            }
+
+            let itemDiv = document.getElementById("items");
+            itemDiv.innerHTML = '';
+            items = []; // Clear previous items if any
+
+            for (let i = 0; i < numItems; i++) {
+                let itemName = prompt(`Enter name for item ${i + 1}:`);
+                let itemPrice = parseFloat(prompt(`Enter price for item ${i + 1}:`));
+
+                if (itemName && !isNaN(itemPrice) && itemPrice >= 0) {
+                    items.push({ name: itemName, price: itemPrice, users: [] });
+                }
+            }
+
+            displayItemInputs();
+            document.getElementById("calculateBtn").style.display = "block";
+        }
+
+        function displayItemInputs() {
+            let itemDiv = document.getElementById("items");
+            itemDiv.innerHTML = '';
+            items.forEach((item, index) => {
+                let itemRow = document.createElement("div");
+                itemRow.innerHTML = `<b>${item.name} - ₹${item.price.toFixed(2)}</b><br>`;
+                let userInput = document.createElement("input");
+                userInput.type = "text";
+                userInput.placeholder = "Enter names of users who consumed this item";
+                userInput.onchange = function() {
+                    assignItemToUser(index, userInput.value);
+                };
+                itemRow.appendChild(userInput);
+                itemDiv.appendChild(itemRow);
+            });
+        }
+
+        function assignItemToUser(itemIndex, users) {
+            if (users) {
+                let userList = users.split(',').map(user => user.trim());
+                items[itemIndex].users = userList;
+            }
+        }
+
+        function calculateSplit() {
+            let transactions = [];
+            let totalPerPerson = 0;
+            let userTotals = {};
+
+            // Get initial expenses and store them
+            for (let i = 0; i < people.length; i++) {
+                let name = document.getElementById(`name${i}`).value;
+                let expense = parseFloat(document.getElementById(`expense${i}`).value);
+                if (!name || isNaN(expense) || expense < 0) {
+                    alert("Please enter valid name and expense values.");
+                    return;
+                }
+                userTotals[name] = { initialExpense: expense, itemExpense: 0, totalOwed: 0 };
+            }
+
+            // Calculate item-based expenses
+            items.forEach(item => {
+                let itemShare = item.price / item.users.length;
+                item.users.forEach(user => {
+                    if (userTotals[user]) {
+                        userTotals[user].itemExpense += itemShare;
+                    }
+                });
+            });
+
+            // Calculate how much each person owes in total (initial + item expenses)
+            let totalExpense = Object.values(userTotals).reduce((sum, user) => sum + user.initialExpense + user.itemExpense, 0);
+            let avg = totalExpense / Object.keys(userTotals).length;
+
+            // Adjust based on how much they have already paid
+            for (let user in userTotals) {
+                let totalPaid = userTotals[user].initialExpense + userTotals[user].itemExpense;
+                userTotals[user].totalOwed = avg - totalPaid;
+            }
+
+            // Prepare the results
+            for (let user in userTotals) {
+                if (userTotals[user].totalOwed > 0) {
+                    transactions.push(`${user} is owed ₹${userTotals[user].totalOwed.toFixed(2)}`);
+                } else if (userTotals[user].totalOwed < 0) {
+                    transactions.push(`${user} owes ₹${Math.abs(userTotals[user].totalOwed).toFixed(2)}`);
+                } else {
+                    transactions.push(`${user} has no balance.`);
+                }
+            }
+
+            displayResults(transactions);
+            saveToHistory(transactions);
+        }
+
+        function displayResults(transactions) {
+            let resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = transactions.length ? transactions.join("<br>") : "All expenses are balanced!";
+        }
+
+        function saveToHistory(transactions) {
+            let history = JSON.parse(localStorage.getItem("splitHistory")) || [];
+            history.push(transactions);
+            localStorage.setItem("splitHistory", JSON.stringify(history));
+            displayHistory();
+        }
+
+        function displayHistory() {
+            let historyDiv = document.getElementById("history");
+            let history = JSON.parse(localStorage.getItem("splitHistory")) || [];
+            historyDiv.innerHTML = history.map((h, i) => `<b>Split #${i + 1}</b><br>${h.join("<br>")}`).join("<hr>");
+        }
+
+        window.onload = displayHistory;
+    </script>
+</body>
+</html>

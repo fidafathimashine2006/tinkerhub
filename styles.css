@@ -1,0 +1,228 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+/* Container for the login form */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+}
+
+/* Heading styling */
+.login-container h2 {
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Form styling */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+/* Input field styling */
+.input-field {
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.input-field label {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.input-field input {
+    padding: 10px;
+    width: 100%;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Button styling */
+button {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f9;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers content vertically */
+    align-items: center; /* Centers content horizontally */
+}
+
+/* Home Page Styles */
+.home-page {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+.home-page header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.home-page .logo {
+    width: 150px;
+    margin-right: 20px; /* Add space between logo and title */
+}
+
+.home-page h1 {
+    font-size: 40px;
+    color: #333;
+    display: flex;
+    align-items: center;
+}
+
+/* Brand name styles */
+.brand-name {
+    color: #007bff;
+    font-weight: 600;
+}
+
+.smart-name {
+    font-family: 'Great Vibes', cursive;
+    font-size: 60px;
+    color: #007bff;
+    text-align: center;
+}
+
+/* Expense Splitter Page Styles */
+.splitter-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    width: 80%;
+    max-width: 900px; /* Increased width for more space */
+    text-align: center;
+}
+
+.splitter-box h2 {
+    font-size: 32px;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.subheading {
+    font-size: 20px;
+    font-weight: 400;
+    margin-top: 10px;
+    display: block;
+}
+
+/* Styling for name and expense input fields in a row */
+.input-row {
+    display: flex;
+    justify-content: space-between; /* Align name and expense in the same row */
+    width: 80%;  /* Adjust width for spacing */
+    margin-bottom: 20px;
+    gap: 20px; /* Adds space between the inputs */
+}
+
+.splitter-box input {
+    width: 45%; /* Adjust the width of each input */
+    padding: 12px;
+    margin: 5px 0;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Icons Section */
+.icons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.icon {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: transform 0.3s ease-in-out;
+}
+
+.icon:hover {
+    transform: scale(1.1);
+}
+
+.icon img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.icon p {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Button Styles */
+button {
+    padding: 12px 30px;
+    background-color: #007bff;
+    color: white;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 20px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
