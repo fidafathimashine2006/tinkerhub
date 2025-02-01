@@ -30,4 +30,13 @@ A simple and interactive bill-splitting web app that helps users split expenses 
 - **LocalStorage** - To store and retrieve past split records.  
 - **Google Fonts** - For an aesthetically pleasing UI.  
 
----
+Setup and Installation
+- To set up and run this project on your local machine, follow these steps:
+- . A code editor (like VS Code)
+- project cntains HTML , CSS,JS
+- 1. Clone the Repository
+  2.  Access the project.
+Team members
+1.Devananda SJ : Created Javascript and html codes
+2.Arsha J N : logo design and splitter code
+3.Fida Fathima Shine : home page design and development
